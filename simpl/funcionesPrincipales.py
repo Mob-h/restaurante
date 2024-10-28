@@ -1,19 +1,19 @@
 import copy
 import sys
-from config import *
+import config
 from funcionesInicio import *
 
-def getPerfiles (id):
+def getPerfiles (id):#chk
     if id == 'all':
-        return userTypes
+        return config.userTypes
     else:
         contenedorPerfil=[]
-        for userType in userTypes:
+        for userType in config.userTypes:
             if userType['userType'] == id:
                 contenedorPerfil.append(userType)
                 return contenedorPerfil
     return None
-def mostrarUserTypes(userTypes):
+def mostrarUserTypes(userTypes):#chk
     print(f"""
 ╔══════════════════════════════════════════════════════════════╗
 ║ {'Usuarios':<15}║{'Permisos':<45}║
@@ -24,13 +24,12 @@ def mostrarUserTypes(userTypes):
     print("╚══════════════════════════════════════════════════════════════╝")
     input(">>Enter para continuar\n")
 
-def verificador_disponibilidad(cantidad_comensales,mesas):
+def verificador_disponibilidad(cantidad_comensales,mesas):#chk
     """variables"""
     for elemento in mesas:
-        global id_mesa
         if elemento["maxPersonas"]>=cantidad_comensales and elemento["estado"]=="libre":
             #"si hay disponibilidad de mesas"
-            id_mesa= elemento["idMesa"]
+            config.id_mesa= elemento["idMesa"]
             return True
             #devuelve true y modifica el id de la mesa
     return False
@@ -43,7 +42,6 @@ def excepcionNumeroEnteros(mensaje):
         except ValueError:
             print(f'>> Opcion ingresada no valida\n>> Ingresar opcion valida')
         except Exception as ms:
-            ms=str(ms)
             print(f'>> Ha ocurrido un error -> {ms}')
         else:
             break
@@ -52,20 +50,20 @@ def excepcionNumeroEnteros(mensaje):
 
 
 #FUNCIONES DE IMPRESION
-def getMesas (id):
+def getMesas (id):#chk
     if id == 'all':
-        return mesas
+        return config.mesas
     else:
         contenedorMesa=[]#para almacenar el diccionario mesa
-        for mesa in mesas:
+        for mesa in config.mesas:
             if mesa['idMesa'] == id:
                 contenedorMesa.append(mesa)
                 return contenedorMesa
     return None
-def impresionMesas(mesas):
+def impresionMesas(mesas):#chk
     """
     Esta funcion recibe la estructutura de datos mesa y realiza una impresion
-    la estructura debe contener una cantidad de mesas de numero PAR
+    la estructura debe contener una cantidad de mesas PAR
     """
     if len(mesas)%2==0:
         print(f"""
@@ -100,7 +98,7 @@ def impresionMesas(mesas):
 {"║":<2}{"Limite →":<17}{(mesas[i]["maxPersonas"]):>4}{"║":<2}""")
        
         input(f"╚══════════════════════╝\n>>Enter para continuar")  
-def impresionPedidosIndividuales(diccionario):
+def impresionPedidosIndividuales(diccionario):#chk
 
     print(f"""╔═══════════════════════════════════════════════════════╗
 ║                                                       ║
@@ -114,7 +112,7 @@ def impresionPedidosIndividuales(diccionario):
         print(f"║{(diccionario["platos"].index(plato)+1):<3}║{plato[0]:<28}║{plato[1]:<4}║{plato[2]:<17}║")
     print("""╚═══════════════════════════════════════════════════════╝""")
     input("Presione Enter para continuar>>")
-def impresionRecetas(recetas):
+def impresionRecetas(recetas):#chk
     i=0
     for elemento in recetas: #Imprime los nombres de las recetas
         print(f"{elemento.get("nombre")}")
@@ -132,7 +130,7 @@ def impresionRecetas(recetas):
                     print(f"Ingrediente \"{j}\"={recetas[i+1]["ingredientes"][j]}")
             else:
                 print(f"{clave} : {valor}")   
-def mostrar_menu_platos(menu):
+def mostrar_menu_platos(menu):#chk
     limp()
     print(f"""
 ╔═══════════════════════════════════════════════════════╗
@@ -148,8 +146,7 @@ def mostrar_menu_platos(menu):
     print("""╚═══════════════════════════════════════════════════════╝""")
     input("Presione Enter para continuar>>")
 
-def verPedidos(pedido):#recibe el pedido del cliente
-
+def verPedidos(pedido):#chk
     if len(pedido['platos']) > 0:#verifica que tenga pedidos
         impresionPedidosIndividuales(pedido)#llamada a funcion para imprimir diccionarios
         opcion = input("¿Desea cancelar algún pedido? (s/n): ").lower()
@@ -162,8 +159,8 @@ def verPedidos(pedido):#recibe el pedido del cliente
     else:
         print("Usted no tiene pedidos activos.")
     input("\nEnter para continuar")
-     
-def menuOpcionesAdministracion():
+    return pedido
+def menuOpcionesAdministracion():#chk
     while True:
         try:
             opcion = int(input(ui[6]))
@@ -181,7 +178,7 @@ def menuOpcionesAdministracion():
         else:
             break
     return opcion
-def impresionInventario(inventario):
+def impresionInventario(inventario):#chk
     for clave,valor in inventario.items():
         print(f"{clave}:{valor}")
 
@@ -200,12 +197,11 @@ def client_menu():
             print(f'>>Opcion ingresada no valida\n>>Ingrese una valida')
             input('>> Enter para continuar')
         except Exception as ms:
-            ms=str(ms)
             print(f'>> Ha ocurrido un error ->{ms}')
         else:
             break
     return opcion
-def hacerPedido(nombre,pedido):
+def hacerPedido(pedido):#chk
     listaAuxiliar=[]
     while True:
         try:
@@ -217,11 +213,11 @@ def hacerPedido(nombre,pedido):
         else:
             break
     while plato != 0:
-        nombrePlato=menu[plato-1][0]
+        nombrePlato=config.menu[plato-1][0]
         while True:
             try:
                 cant = int(input(f"Seleccione una cantidad (disponible {menu[plato-1][3]}): "))
-                if cant > menu[plato-1][3]:
+                if cant > config.menu[plato-1][3]:
                     raise ValueError
             except ValueError:
                 print(f'>> Opcion ingresada no valida\n>> Ingrese opcion valida')
@@ -230,7 +226,7 @@ def hacerPedido(nombre,pedido):
                 print(f'>>ha ocurrido un error -> {ms}')
             else:
                 break
-        if cant <= menu[plato-1][3]: #Si hay suficiente stock
+        if cant <= config.menu[plato-1][3]: #Si hay suficiente stock
             listaAuxiliar.clear()
             if len(pedido["platos"])>0:
                 flag=True
@@ -249,7 +245,7 @@ def hacerPedido(nombre,pedido):
                 listaAuxiliar.append("En preparacion")
                 pedido["platos"].append(listaAuxiliar.copy())
         
-            menu[plato-1][3] -= cant #Resta la cantidad pedida al stock                   
+            config.menu[plato-1][3] -= cant #Resta la cantidad pedida al stock                   
             print(f"Has agregado {cant} de {nombrePlato} a tu pedido.")
         while True:
             try:
@@ -262,7 +258,7 @@ def hacerPedido(nombre,pedido):
                 break            
     print("Gracias por su pedido!")
     input("\nEnter para continuar")
-def cliente():
+def cliente():#chk
     listaIds=[]
     while True:
         try:
@@ -279,10 +275,10 @@ def cliente():
         try:
             numeroMesa=input('>> Ingrese numero de mesa')
             int(numeroMesa)
-            listaIds=[mesa['idMesa'] for mesa in mesas]
+            listaIds=[mesa['idMesa'] for mesa in config.mesas]
             if numeroMesa not in listaIds:
                 raise ValueError
-            for mesa in mesas:
+            for mesa in config.mesas:
                 if mesa['idMesa']==numeroMesa and mesa['estado']!='libre':
                     raise ValueError
         except ValueError:
@@ -300,25 +296,25 @@ def cliente():
     limp()
     while opcion !=4:    
         if opcion == 1:
-            mostrar_menu_platos(menu)
+            mostrar_menu_platos(config.menu)
             limp()
         elif opcion == 2:
-            mostrar_menu_platos(menu)     
-            hacerPedido(nombre,pedido)            
+            mostrar_menu_platos(config.menu)     
+            hacerPedido(pedido)            
         elif opcion == 3:
-            verPedidos(pedido)
+            pedido=verPedidos(pedido)
         opcion=client_menu()
     limp()
     if len(pedido['platos'])>0:
-        pedidos.append(copy.deepcopy(pedido))#UNA VEZ QUE EL CLIENTE CIERRA SESION, EL PEDIDO SE MANDA A LA ESTRUCTURA PRINCIPAL
+        config.pedidos.append(copy.deepcopy(pedido))#UNA VEZ QUE EL CLIENTE CIERRA SESION, EL PEDIDO SE MANDA A LA ESTRUCTURA PRINCIPAL
     print("Gracias!")
-def reservar(nombre):    
-    impresionMesas(mesas)
+def reservar(nombre):#chk    
+    impresionMesas(config.mesas)
     reserva=str(excepcionNumeroEnteros(f">>Que mesa quiere reservar?\n>>"))
     comensales=excepcionNumeroEnteros(f">>Para cuantas personas es la reserva?\n>>")
     mesaEncontrada = False
     reservado = False
-    for mesa in mesas:
+    for mesa in config.mesas:
         #Verifico que la mesa sea valida y que haya elegido una libre
         if mesa["idMesa"] == reserva and mesa["estado"] == "libre":
             mesaEncontrada = True
@@ -343,8 +339,8 @@ def reservar(nombre):
         #Se intento reservar para mas personas que la capacidad de la mesa
         print("Reserva no realizada.")
     input("\nEnter para continuar")
-def verReservas(nombre):
-    reservasCliente = [mesa for mesa in mesas if mesa["reserva"] == nombre]#enlazamos si es que nuestro cliente tiene nombre, obtenemos una lista de diccionarios
+def verReservas(nombre):#chk
+    reservasCliente = [mesa for mesa in config.mesas if mesa["reserva"] == nombre]#enlazamos si es que nuestro cliente tiene nombre, obtenemos una lista de diccionarios
     if len(reservasCliente) > 0:# si existe el diccionario que coincida con el nombre avanzamos
         print(f"Reservas de {nombre.capitalize()}:")
         impresionMesas(reservasCliente)
@@ -374,7 +370,7 @@ def verReservas(nombre):
   
   
 #FUNCIONES DE COCINERO
-def menuAdminPedidos():
+def menuAdminPedidos():#chk
     while True:
         try:
             opcion =int(input(ui[4]))
@@ -393,7 +389,7 @@ def menuAdminPedidos():
         else:
             break
     return opcion
-def administrarPedidos(pedidos):
+def administrarPedidos(pedidos):#chk
     opcion=0
     contador=0
     for elemento in pedidos:
@@ -412,7 +408,6 @@ def administrarPedidos(pedidos):
             print(f'>> Interrupcion detectada\n>> Terminando tareas..\n>> Finalizando..')
             sys.exit(0)
         except Exception as ms:
-            ms=str(ms)
             print('>> Ha ocurrido un error -> {ms}')
         else:
             break
@@ -430,7 +425,6 @@ def administrarPedidos(pedidos):
             print(f'>> Interrupcion detectada\n>> Terminando tareas..\n>> Finalizando..')
             sys.exit(0)
         except Exception as ms:
-            ms=str(ms)
             print('>> Ha ocurrido un error -> {ms}')
         else:
             break
@@ -447,13 +441,13 @@ def administrarPedidos(pedidos):
     elif opcion==5:
         pedidos[numPedido-1]["platos"][plato-1][2]="Rechazado"
     return pedidos    
-def solicitarIngredientes(inventario):
+def solicitarIngredientes(inventario):#chk
     impresionInventario(inventario)
     nombre=input("ingrese nombre del producto a agregar").capitalize()
     cantidad=int(input("ingrese cantidad a pedir"))
     """modificar ingredientes"""
     return inventario
-def repriorizarPedidos(pedidos):
+def repriorizarPedidos(pedidos):#chk
     contador=0
     for elemento in pedidos:
         contador+=1
