@@ -1,7 +1,61 @@
 import copy
 import sys
 import config
-from funcionesInicio import *
+
+
+#FUNCIONES EN RELACION A INICIO
+def verificarTipo (type):
+    tipoValido = False
+    for userType in config.userTypes:
+        if userType['userType'] == type:
+            tipoValido = True
+    return tipoValido
+def getPermisos (type):
+    for userType in config.userTypes:
+        if userType['userType'] == type:
+            return userType['permisos']
+    else:
+        return None
+def verificarPermisos (state, permisos):
+    stateValido = False
+    for permiso in permisos:
+        if permiso == state:
+            stateValido = True
+    return stateValido
+def impresionPermisos(userType,appState):
+    config.limp()
+    if userType=="cliente":
+        appState=input(config.ui[1])
+        if appState=="1":
+            appState="operar"
+        elif appState=="2":#m
+            appState="reservar"
+        elif appState=="3":
+            appState="finalizado"
+    elif userType=="admin":
+        appState=input(config.ui[2])
+        if appState=="1":
+            appState="verPerfiles"
+        elif appState=="2":
+            appState="verMesas"
+        elif appState=="3":
+            appState="pedidos"
+        elif appState=="4":
+            appState="finalizado"  
+    elif userType=='cocinero':
+        appState="pedidos"      
+    elif userType=='mesero':
+        appState=input(config.ui[3])    
+        if appState=="1":
+            appState="verMesas"
+        elif appState=="2":
+            appState="recepcion"
+        elif appState=="3":
+            appState="finalizado" 
+    return appState
+
+
+
 
 def getPerfiles (id):#chk
     if id == 'all':
@@ -117,7 +171,7 @@ def impresionRecetas(recetas):#chk
     for elemento in recetas: #Imprime los nombres de las recetas
         print(f"{elemento.get("nombre")}")
     nombre=input("Ingrese nombre de plato: ").capitalize()
-    limp()
+    config.limp()
     while i<len(recetas) and recetas[i].get("nombre")!=nombre:
         i=i+1
     if i>=len(recetas):
@@ -131,7 +185,7 @@ def impresionRecetas(recetas):#chk
             else:
                 print(f"{clave} : {valor}")   
 def mostrar_menu_platos(menu):#chk
-    limp()
+    config.limp()
     print(f"""
 ╔═══════════════════════════════════════════════════════╗
 ║                                                       ║
@@ -163,7 +217,7 @@ def verPedidos(pedido):#chk
 def menuOpcionesAdministracion():#chk
     while True:
         try:
-            opcion = int(input(ui[6]))
+            opcion = int(input(config.ui[6]))
             if opcion<1 or opcion>5:
                 raise ValueError
         except ValueError:
@@ -189,8 +243,8 @@ def impresionInventario(inventario):#chk
 def client_menu():
     while True:
         try:
-            limp()
-            opcion = int(input(ui[5]))
+            config.limp()
+            opcion = int(input(config.ui[5]))
             if opcion<1 or opcion>4:
                 raise ValueError
         except ValueError:
@@ -216,7 +270,7 @@ def hacerPedido(pedido):#chk
         nombrePlato=config.menu[plato-1][0]
         while True:
             try:
-                cant = int(input(f"Seleccione una cantidad (disponible {menu[plato-1][3]}): "))
+                cant = int(input(f"Seleccione una cantidad (disponible {config.menu[plato-1][3]}): "))
                 if cant > config.menu[plato-1][3]:
                     raise ValueError
             except ValueError:
@@ -293,18 +347,18 @@ def cliente():#chk
             "mesa":numeroMesa,
             "platos":[]}
     opcion = client_menu()
-    limp()
+    config.limp()
     while opcion !=4:    
         if opcion == 1:
             mostrar_menu_platos(config.menu)
-            limp()
+            config.limp()
         elif opcion == 2:
             mostrar_menu_platos(config.menu)     
             hacerPedido(pedido)            
         elif opcion == 3:
             pedido=verPedidos(pedido)
         opcion=client_menu()
-    limp()
+    config.limp()
     if len(pedido['platos'])>0:
         config.pedidos.append(copy.deepcopy(pedido))#UNA VEZ QUE EL CLIENTE CIERRA SESION, EL PEDIDO SE MANDA A LA ESTRUCTURA PRINCIPAL
     print("Gracias!")
@@ -373,7 +427,7 @@ def verReservas(nombre):#chk
 def menuAdminPedidos():#chk
     while True:
         try:
-            opcion =int(input(ui[4]))
+            opcion =int(input(config.ui[4]))
             if opcion<1 or opcion>7:
                 raise ValueError
         except ValueError:
