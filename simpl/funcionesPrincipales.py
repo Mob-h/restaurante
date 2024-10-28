@@ -3,7 +3,6 @@ import sys
 from config import *
 from funcionesInicio import *
 
-#funciones principales sin ordenar
 def getPerfiles (id):
     if id == 'all':
         return userTypes
@@ -15,7 +14,6 @@ def getPerfiles (id):
                 return contenedorPerfil
     return None
 def mostrarUserTypes(userTypes):
-    #debe recibir una lista de dicts
     print(f"""
 ╔══════════════════════════════════════════════════════════════╗
 ║ {'Usuarios':<15}║{'Permisos':<45}║
@@ -150,11 +148,10 @@ def mostrar_menu_platos(menu):
     print("""╚═══════════════════════════════════════════════════════╝""")
     input("Presione Enter para continuar>>")
 
-def verPedidos(pedido):#esta funcion solo debe recibir el nombre duelo del pedido
+def verPedidos(pedido):#recibe el pedido del cliente
 
-    if len(pedido['platos']) > 0:#verifica que el el pedido exista
+    if len(pedido['platos']) > 0:#verifica que tenga pedidos
         impresionPedidosIndividuales(pedido)#llamada a funcion para imprimir diccionarios
-        #ESTO DEBERIA SER OTRA FUNCION
         opcion = input("¿Desea cancelar algún pedido? (s/n): ").lower()
         if opcion == 's':
             numPedido = int(input("Ingrese el número de plato que desea cancelar: ")) - 1
@@ -167,25 +164,9 @@ def verPedidos(pedido):#esta funcion solo debe recibir el nombre duelo del pedid
     input("\nEnter para continuar")
      
 def menuOpcionesAdministracion():
-    
     while True:
         try:
-            opcion = int(input(f"""
-╔═══════════════════════════════════════╗
-║                                       ║
-║           🍽 RESTAURANTE🍽              ║
-║        Opciones de Administración     ║
-║                                       ║
-╠═══════════════════════════════════════╣
-║ Seleccione el estado del pedido:      ║
-╠═══════════════════════════════════════╣
-║ [1] Sin hacer                         ║
-║ [2] En preparación                    ║
-║ [3] Listo                             ║
-║ [4] Entregado                         ║
-║ [5] Rechazado                         ║
-╚═══════════════════════════════════════╝
->>Ingrese número de opción\n>>"""))
+            opcion = int(input(ui[6]))
             if opcion<1 or opcion>5:
                 raise ValueError
         except ValueError:
@@ -204,26 +185,15 @@ def impresionInventario(inventario):
     for clave,valor in inventario.items():
         print(f"{clave}:{valor}")
 
+
+
+
 #FUNCIONES DE CLIENTE
 def client_menu():
     while True:
         try:
             limp()
-            opcion = int(input(f"""
-╔════════════════════════════════════════╗
-║                                        ║
-║            🍽 RESTAURANTE🍽              ║
-║               Bienvenido               ║
-║                                        ║
-╠════════════════════════════════════════╣
-║ Ingrese opcion:                        ║
-╠════════════════════════════════════════╣
-║ 1 → Menu                               ║
-║ 2 → Realizar pedido                    ║
-║ 3 → Ver estado de pedidos              ║
-║ 4 → Salir                              ║
-╚════════════════════════════════════════╝   
->>"""))
+            opcion = int(input(ui[5]))
             if opcion<1 or opcion>4:
                 raise ValueError
         except ValueError:
@@ -236,10 +206,7 @@ def client_menu():
             break
     return opcion
 def hacerPedido(nombre,pedido):
-    def verificacion(self):
-        print('del obejto')
     listaAuxiliar=[]
-    
     while True:
         try:
             plato = int(input("\nIngrese numero de plato (0 para terminar): "))
@@ -251,7 +218,6 @@ def hacerPedido(nombre,pedido):
             break
     while plato != 0:
         nombrePlato=menu[plato-1][0]
-        
         while True:
             try:
                 cant = int(input(f"Seleccione una cantidad (disponible {menu[plato-1][3]}): "))
@@ -264,7 +230,6 @@ def hacerPedido(nombre,pedido):
                 print(f'>>ha ocurrido un error -> {ms}')
             else:
                 break
-        
         if cant <= menu[plato-1][3]: #Si hay suficiente stock
             listaAuxiliar.clear()
             if len(pedido["platos"])>0:
@@ -297,8 +262,7 @@ def hacerPedido(nombre,pedido):
                 break            
     print("Gracias por su pedido!")
     input("\nEnter para continuar")
-    
-def cliente():#ahora la funcion crea pedidos con el atributo idmesa, luego ver como modificar la mesa,
+def cliente():
     listaIds=[]
     while True:
         try:
@@ -332,10 +296,8 @@ def cliente():#ahora la funcion crea pedidos con el atributo idmesa, luego ver c
     pedido={"nombre":nombre,
             "mesa":numeroMesa,
             "platos":[]}
-    
     opcion = client_menu()
     limp()
-    #EXCEPCION
     while opcion !=4:    
         if opcion == 1:
             mostrar_menu_platos(menu)
@@ -348,11 +310,9 @@ def cliente():#ahora la funcion crea pedidos con el atributo idmesa, luego ver c
         opcion=client_menu()
     limp()
     if len(pedido['platos'])>0:
-        pedidos.append(copy.deepcopy(pedido))
+        pedidos.append(copy.deepcopy(pedido))#UNA VEZ QUE EL CLIENTE CIERRA SESION, EL PEDIDO SE MANDA A LA ESTRUCTURA PRINCIPAL
     print("Gracias!")
-    
-def reservar(nombre):
-    
+def reservar(nombre):    
     impresionMesas(mesas)
     reserva=str(excepcionNumeroEnteros(f">>Que mesa quiere reservar?\n>>"))
     comensales=excepcionNumeroEnteros(f">>Para cuantas personas es la reserva?\n>>")
@@ -383,9 +343,7 @@ def reservar(nombre):
         #Se intento reservar para mas personas que la capacidad de la mesa
         print("Reserva no realizada.")
     input("\nEnter para continuar")
-          
 def verReservas(nombre):
-    
     reservasCliente = [mesa for mesa in mesas if mesa["reserva"] == nombre]#enlazamos si es que nuestro cliente tiene nombre, obtenemos una lista de diccionarios
     if len(reservasCliente) > 0:# si existe el diccionario que coincida con el nombre avanzamos
         print(f"Reservas de {nombre.capitalize()}:")
@@ -410,32 +368,16 @@ def verReservas(nombre):
             pass
     else:
         print("No tiene reservas activas.")
-        
     input("\nEnter para continuar")
+  
+  
+  
   
 #FUNCIONES DE COCINERO
 def menuAdminPedidos():
     while True:
         try:
-            opcion =int(input(f"""
-╔════════════════════════════════════════╗
-║                                        ║
-║            🍽 RESTAURANTE🍽              ║
-║               Bienvenido               ║
-║                                        ║
-╠════════════════════════════════════════╣
-║ Ingrese opcion:                        ║
-╠════════════════════════════════════════╣
-║ 1 → Salon                              ║
-║ 2 → Ver pedidos                        ║
-║ 3 → Administrar pedidos                ║
-║ 4 → Consultar recetas                  ║
-║ 5 → Solicitar aumento de ingredientes  ║
-║ 6 → Repriorizar Pedidos                ║
-║ 7 → Salir                              ║
-╚════════════════════════════════════════╝   
->>Ingrese numero de opcion
->>"""))
+            opcion =int(input(ui[4]))
             if opcion<1 or opcion>7:
                 raise ValueError
         except ValueError:
@@ -450,8 +392,6 @@ def menuAdminPedidos():
             input('>> Enter para continuar')
         else:
             break
-
-            
     return opcion
 def administrarPedidos(pedidos):
     opcion=0
@@ -460,14 +400,12 @@ def administrarPedidos(pedidos):
         contador+=1
         print(f"{">>"}{("Pedido numero → "+str(contador)).center(55)}")
         impresionPedidosIndividuales(elemento)
-    #EXCEPCION
     while True:
         try:
             numPedido=int(input(">>Ingrese numero de pedido a modificar\n>> "))
             listaAuxiliarPedidos=list(range(1,len(pedidos)+1))
             if numPedido not in listaAuxiliarPedidos:
                 raise ValueError    
-            
         except ValueError:
             print('>> opcion ingresada no valida\n>> Ingrese una opcion valida')
         except KeyboardInterrupt:
@@ -478,7 +416,6 @@ def administrarPedidos(pedidos):
             print('>> Ha ocurrido un error -> {ms}')
         else:
             break
-    #EXCEPCION
     impresionPedidosIndividuales(pedidos[numPedido-1])
     while True:
         try:
@@ -497,18 +434,12 @@ def administrarPedidos(pedidos):
             print('>> Ha ocurrido un error -> {ms}')
         else:
             break
-    
-    
-    
     opcion=menuOpcionesAdministracion()
     #EXCEPCION EN CADA ACCESO
     if opcion==1:
-        
         pedidos[numPedido-1]["platos"][plato-1][2]="Sin hacer"
-        
     elif opcion==2:
         pedidos[numPedido-1]["platos"][plato-1][2]="En preparacion"
-        
     elif opcion==3:
         pedidos[numPedido-1]["platos"][plato-1][2]="Listo"
     elif opcion==4:
@@ -530,12 +461,10 @@ def repriorizarPedidos(pedidos):
         impresionPedidosIndividuales(elemento)
     # Solicito el numero del pedido que se desea mover y ajusto el indice
     numPedido = int(input("Ingrese el número de pedido que desea mover: ")) - 1
-
     # Verifico que el numero de pedido sea valido
     while numPedido < 0 or numPedido >= len(pedidos):
         print("Número de pedido inválido.")
         numPedido = int(input("Ingrese el número de pedido que desea mover: ")) - 1
-
     # Solicito la nueva posicion a la que se desea mover y ajusto el indice
     nuevaPos = int(input("Ingrese la nueva posición (1 para la primera): ")) - 1
     pedidoMovido = pedidos[numPedido]
@@ -550,6 +479,5 @@ def repriorizarPedidos(pedidos):
     else:
         # Inserto el pedido en la nueva posicion usando rebanado
         pedidos = pedidos[:nuevaPos] + [pedidoMovido] + pedidos[nuevaPos:]
-
     print("Repriorización hecha.")  
     return pedidos
