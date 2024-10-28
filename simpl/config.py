@@ -301,7 +301,7 @@ loggedUser = ''
 loggedPassword = ''
 loggedUserType = ''
 loggedUserPermissions = None
-
+id_mesa={}
 
 opcion=0
 condicion_general=1
@@ -353,4 +353,3 @@ def limp():
                  
                  
                  """)
-id_mesa={}
