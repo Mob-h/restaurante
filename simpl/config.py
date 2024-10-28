@@ -294,10 +294,7 @@ mesas = [
         "maxPersonas" : 16
     }
 ]
-
-
-"""MODIFICAR VARIABLE PARA QUE COINCIDA CON LAS DEMAS"""
-
+ui=[]
 appState = 'login'
 
 loggedUser = ''
@@ -309,45 +306,50 @@ loggedUserPermissions = None
 opcion=0
 condicion_general=1
 condicion=1
-def limp():
+direcciones=['simpl/UI/menuPerfiles.txt','simpl/UI/menuCliente.txt','simpl/UI/menuAdministrador.txt','simpl/UI/menuMesero.txt','simpl/UI/menuCocinero.txt']
+for dir in direcciones:        
+    with open(dir,'r',encoding='utf-8') as archivo:
+        auxiliar=archivo.read()
+    ui.append(auxiliar)
+def limp(): 
     print("""
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          """)
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 """)

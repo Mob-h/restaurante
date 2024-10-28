@@ -3,8 +3,6 @@ from config import *
 from funcionesPrincipales import *
 from funcionesInicio import *
 #archivos interfazes
-with open("UI.txt",'r',encoding='utf-8') as archivo:
-    menuPerfil=archivo.read()
 #FUNCT
 
 
@@ -17,7 +15,7 @@ while(appState != possibleStatesTupla[-1]):
     # Inicializacion 
     while True:
         if (loggedUserType == '' and appState == 'login'):
-            tipoIngresado =input(menuPerfil)
+            tipoIngresado =input(ui[0])
             #DEBERIAMOS AGREGAR VALIDACION CON E.REGULARES COLO POR SI ESCRIBE CON CARACTERES
             if tipoIngresado=="1":
                 tipoIngresado="cliente"

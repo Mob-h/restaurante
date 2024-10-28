@@ -5,6 +5,8 @@ from config import *
 from funcionesPrincipales import *
 
 
+
+
 #FUNCIONES EN RELACION A INICIO
 def verificarTipo (type):
     tipoValido = False
