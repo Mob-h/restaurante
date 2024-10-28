@@ -1,7 +1,7 @@
 #IMPORTS
 from config import *
 from funcionesPrincipales import *
-from funcionesInicio import *
+
 #archivos interfazes
 #FUNCT
 
