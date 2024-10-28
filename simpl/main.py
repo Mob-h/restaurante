@@ -132,23 +132,9 @@ while(appState != possibleStatesTupla[-1]):
             
             
         while True:
-            mensaje="""
-╔════════════════════════════════════════╗
-║                                        ║
-║            🍽 RESTAURANTE🍽              ║
-║               Reservas                 ║
-║                                        ║
-╠════════════════════════════════════════╣
-║ Ingrese opción:                        ║
-╠════════════════════════════════════════╣
-║ 1 → Reservar                           ║
-║ 2 → Ver reservas                       ║
-║ 3 → Salir                              ║
-╚════════════════════════════════════════╝          
->>"""
-            opcion=excepcionNumeroEnteros(mensaje)
+            opcion=excepcionNumeroEnteros(ui[7])
             while opcion<1 or opcion>3:
-                opcion=excepcionNumeroEnteros(mensaje)
+                opcion=excepcionNumeroEnteros(ui[7])
             if opcion==1:
                 reservar(nombre)
             elif opcion==2:
@@ -156,7 +142,6 @@ while(appState != possibleStatesTupla[-1]):
             elif opcion==3:
                 appState='login'
                 break
-
     if appState=="pedidos":
         condicion_general=1
         while condicion_general==1:

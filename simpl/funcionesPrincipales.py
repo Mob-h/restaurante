@@ -26,8 +26,8 @@ def mostrarUserTypes(userTypes):
 
 def verificador_disponibilidad(cantidad_comensales,mesas):
     """variables"""
-    global id_mesa
     for elemento in mesas:
+        global id_mesa
         if elemento["maxPersonas"]>=cantidad_comensales and elemento["estado"]=="libre":
             #"si hay disponibilidad de mesas"
             id_mesa= elemento["idMesa"]
