@@ -306,7 +306,7 @@ loggedUserPermissions = None
 opcion=0
 condicion_general=1
 condicion=1
-direcciones=['simpl/UI/menuPerfiles.txt','simpl/UI/menuCliente.txt','simpl/UI/menuAdministrador.txt','simpl/UI/menuMesero.txt','simpl/UI/menuCocinero.txt']
+direcciones=['simpl/UI/menuPerfiles.txt','simpl/UI/menuCliente.txt','simpl/UI/menuAdministrador.txt','simpl/UI/menuMesero.txt','simpl/UI/menuCocinero.txt','simpl/UI/opcionesCliente.txt','simpl/UI/estadosPedidos.txt']
 for dir in direcciones:        
     with open(dir,'r',encoding='utf-8') as archivo:
         auxiliar=archivo.read()

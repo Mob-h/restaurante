@@ -5,8 +5,6 @@ from config import *
 from funcionesPrincipales import *
 
 
-
-
 #FUNCIONES EN RELACION A INICIO
 def verificarTipo (type):
     tipoValido = False
@@ -29,21 +27,7 @@ def verificarPermisos (state, permisos):
 def impresionPermisos(userType,appState):
     limp()
     if userType=="cliente":
-        appState=input("""
-╔════════════════════════════════════════╗
-║                                        ║
-║            🍽 RESTAURANTE🍽              ║
-║                Cliente                 ║
-║                                        ║
-╠════════════════════════════════════════╣
-║ Ingrese opcion:                        ║
-╠════════════════════════════════════════╣
-║ 1 → Iniciar                            ║
-║ 2 → Reservas                           ║
-║ 3 → Salir                              ║
-║                                        ║
-╚════════════════════════════════════════╝
->>""")
+        appState=input(ui[1])
         if appState=="1":
             appState="operar"
         elif appState=="2":#m
@@ -51,21 +35,7 @@ def impresionPermisos(userType,appState):
         elif appState=="3":
             appState="finalizado"
     elif userType=="admin":
-        appState=input("""
-╔════════════════════════════════════════╗
-║                                        ║
-║            🍽 RESTAURANTE🍽              ║
-║             Administrador              ║
-║                                        ║
-╠════════════════════════════════════════╣
-║ Ingrese opcion:                        ║
-╠════════════════════════════════════════╣
-║ 1 → Perfiles                           ║
-║ 2 → Mesas                              ║
-║ 3 → Pedidos                            ║
-║ 4 → Salir                              ║
-╚════════════════════════════════════════╝
->>""")
+        appState=input(ui[2])
         if appState=="1":
             appState="verPerfiles"
         elif appState=="2":
@@ -77,21 +47,7 @@ def impresionPermisos(userType,appState):
     elif userType=='cocinero':
         appState="pedidos"      
     elif userType=='mesero':
-        appState=input("""
-╔════════════════════════════════════════╗
-║                                        ║
-║            🍽 RESTAURANTE🍽              ║
-║                Mesero                  ║
-║                                        ║
-╠════════════════════════════════════════╣
-║ Ingrese opcion:                        ║
-╠════════════════════════════════════════╣
-║ 1 → Salon                              ║
-║ 2 → Recepcion                          ║
-║ 3 → Salir                              ║
-║                                        ║
-╚════════════════════════════════════════╝
->>""")    
+        appState=input(ui[3])    
         if appState=="1":
             appState="verMesas"
         elif appState=="2":

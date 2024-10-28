@@ -354,21 +354,7 @@ def client_menu():
     while True:
         try:
             limp()
-            opcion = int(input(f"""
-╔════════════════════════════════════════╗
-║                                        ║
-║            🍽 RESTAURANTE🍽              ║
-║               Bienvenido               ║
-║                                        ║
-╠════════════════════════════════════════╣
-║ Ingrese opcion:                        ║
-╠════════════════════════════════════════╣
-║ 1 → Menu                               ║
-║ 2 → Realizar pedido                    ║
-║ 3 → Ver estado de pedidos              ║
-║ 4 → Salir                              ║
-╚════════════════════════════════════════╝   
->>"""))
+            opcion = int(input(ui[5]))
             if opcion<1 or opcion>4:
                 raise ValueError
         except ValueError:
@@ -450,25 +436,7 @@ def cliente():#ahora la funcion crea pedidos con el atributo idmesa, luego ver c
 def menuAdminPedidos():
     while True:
         try:
-            opcion =int(input(f"""
-╔════════════════════════════════════════╗
-║                                        ║
-║            🍽 RESTAURANTE🍽              ║
-║               Bienvenido               ║
-║                                        ║
-╠════════════════════════════════════════╣
-║ Ingrese opcion:                        ║
-╠════════════════════════════════════════╣
-║ 1 → Salon                              ║
-║ 2 → Ver pedidos                        ║
-║ 3 → Administrar pedidos                ║
-║ 4 → Consultar recetas                  ║
-║ 5 → Solicitar aumento de ingredientes  ║
-║ 6 → Repriorizar Pedidos                ║
-║ 7 → Salir                              ║
-╚════════════════════════════════════════╝   
->>Ingrese numero de opcion
->>"""))
+            opcion =int(input(ui[4]))
             if opcion<1 or opcion>7:
                 raise ValueError
         except ValueError:
@@ -503,22 +471,7 @@ def menuOpcionesAdministracion():
     
     while True:
         try:
-            opcion = int(input(f"""
-╔═══════════════════════════════════════╗
-║                                       ║
-║           🍽 RESTAURANTE🍽              ║
-║        Opciones de Administración     ║
-║                                       ║
-╠═══════════════════════════════════════╣
-║ Seleccione el estado del pedido:      ║
-╠═══════════════════════════════════════╣
-║ [1] Sin hacer                         ║
-║ [2] En preparación                    ║
-║ [3] Listo                             ║
-║ [4] Entregado                         ║
-║ [5] Rechazado                         ║
-╚═══════════════════════════════════════╝
->>Ingrese número de opción\n>>"""))
+            opcion = int(input(ui[6]))
             if opcion<1 or opcion>5:
                 raise ValueError
         except ValueError:
@@ -661,21 +614,7 @@ def repriorizarPedidos(pedidos):
 def impresionPermisos(userType,appState):
     limp()
     if userType=="cliente":
-        appState=input("""
-╔════════════════════════════════════════╗
-║                                        ║
-║            🍽 RESTAURANTE🍽              ║
-║                Cliente                 ║
-║                                        ║
-╠════════════════════════════════════════╣
-║ Ingrese opcion:                        ║
-╠════════════════════════════════════════╣
-║ 1 → Iniciar                            ║
-║ 2 → Reservas                           ║
-║ 3 → Salir                              ║
-║                                        ║
-╚════════════════════════════════════════╝
->>""")
+        appState=input(ui[1])
         if appState=="1":
             appState="operar"
         elif appState=="2":#m
@@ -683,21 +622,7 @@ def impresionPermisos(userType,appState):
         elif appState=="3":
             appState="finalizado"
     elif userType=="admin":
-        appState=input("""
-╔════════════════════════════════════════╗
-║                                        ║
-║            🍽 RESTAURANTE🍽              ║
-║             Administrador              ║
-║                                        ║
-╠════════════════════════════════════════╣
-║ Ingrese opcion:                        ║
-╠════════════════════════════════════════╣
-║ 1 → Perfiles                           ║
-║ 2 → Mesas                              ║
-║ 3 → Pedidos                            ║
-║ 4 → Salir                              ║
-╚════════════════════════════════════════╝
->>""")
+        appState=input(ui[2])
         if appState=="1":
             appState="verPerfiles"
         elif appState=="2":
@@ -709,21 +634,7 @@ def impresionPermisos(userType,appState):
     elif userType=='cocinero':
         appState="pedidos"      
     elif userType=='mesero':
-        appState=input("""
-╔════════════════════════════════════════╗
-║                                        ║
-║            🍽 RESTAURANTE🍽              ║
-║                Mesero                  ║
-║                                        ║
-╠════════════════════════════════════════╣
-║ Ingrese opcion:                        ║
-╠════════════════════════════════════════╣
-║ 1 → Salon                              ║
-║ 2 → Recepcion                          ║
-║ 3 → Salir                              ║
-║                                        ║
-╚════════════════════════════════════════╝
->>""")    
+        appState=input(ui[3])    
         if appState=="1":
             appState="verMesas"
         elif appState=="2":
