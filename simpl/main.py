@@ -115,9 +115,9 @@ while(config.appState != config.possibleStatesTupla[-1]):
             else:
                 break
         impresionMesas(mesa)
-    if appState == 'operar':
+    if config.appState == 'operar':
         cliente()
-    if appState == 'reservar':
+    if config.appState == 'reservar':
         while True:
             try:
                 nombre = input("Ingrese su nombre:\n>>").capitalize()
