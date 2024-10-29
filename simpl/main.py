@@ -172,7 +172,7 @@ while(config.appState != config.possibleStatesTupla[-1]):
                 while config.condicion==1:
                     config.pedidos=administrarPedidos(config.pedidos)
                     #EXCEPCION
-                    condicion=int(input("Seguir modificando pedidos 1/Si 2/No"))
+                    config.condicion=int(input("Seguir modificando pedidos 1/Si 2/No"))
                     config.limp()
             elif config.opcion==4:
                 impresionRecetas(config.recetas)
