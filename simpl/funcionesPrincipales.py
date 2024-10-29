@@ -4,25 +4,25 @@ import config
 
 
 #FUNCIONES EN RELACION A INICIO
-def verificarTipo (type):
+def verificarTipo (type):#CHK
     tipoValido = False
     for userType in config.userTypes:
         if userType['userType'] == type:
             tipoValido = True
     return tipoValido
-def getPermisos (type):
+def getPermisos (type):#CHK
     for userType in config.userTypes:
         if userType['userType'] == type:
             return userType['permisos']
     else:
         return None
-def verificarPermisos (state, permisos):
+def verificarPermisos (state, permisos):#CHK
     stateValido = False
     for permiso in permisos:
         if permiso == state:
             stateValido = True
     return stateValido
-def impresionPermisos(userType,appState):
+def impresionPermisos(userType,appState):#CHK
     config.limp()
     if userType=="cliente":
         appState=input(config.ui[1])
@@ -57,7 +57,7 @@ def impresionPermisos(userType,appState):
 
 
 
-def getPerfiles (id):#chk
+def getPerfiles (id):#CHK
     if id == 'all':
         return config.userTypes
     else:
@@ -67,7 +67,7 @@ def getPerfiles (id):#chk
                 contenedorPerfil.append(userType)
                 return contenedorPerfil
     return None
-def mostrarUserTypes(userTypes):#chk
+def mostrarUserTypes(userTypes):#CHK
     print(f"""
 ╔══════════════════════════════════════════════════════════════╗
 ║ {'Usuarios':<15}║{'Permisos':<45}║
@@ -78,7 +78,7 @@ def mostrarUserTypes(userTypes):#chk
     print("╚══════════════════════════════════════════════════════════════╝")
     input(">>Enter para continuar\n")
 
-def verificador_disponibilidad(cantidad_comensales,mesas):#chk
+def verificador_disponibilidad(cantidad_comensales,mesas):#CHK
     """variables"""
     for elemento in mesas:
         if elemento["maxPersonas"]>=cantidad_comensales and elemento["estado"]=="libre":
@@ -104,7 +104,7 @@ def excepcionNumeroEnteros(mensaje):
 
 
 #FUNCIONES DE IMPRESION
-def getMesas (id):#chk
+def getMesas (id):#CHK
     if id == 'all':
         return config.mesas
     else:
@@ -119,7 +119,7 @@ def impresionMesas(mesas):#chk
     Esta funcion recibe la estructutura de datos mesa y realiza una impresion
     la estructura debe contener una cantidad de mesas PAR
     """
-    if len(mesas)%2==0:
+    if len(mesas)%2==0:#CHK
         print(f"""
 ╔═════════════════════════════════════════════╗
 ║                                             ║
@@ -347,7 +347,7 @@ def cliente():#chk
             "mesa":numeroMesa,
             "platos":[]}
     opcion = client_menu()
-    config.limp()
+    config.limp()#HASTA ACA REVISAMOS 
     while opcion !=4:    
         if opcion == 1:
             mostrar_menu_platos(config.menu)

@@ -113,7 +113,7 @@ while(config.appState != config.possibleStatesTupla[-1]):
                 break
         impresionMesas(mesa)
     if config.appState == 'operar':
-        cliente()
+        cliente()#HASTA ACA REVISAMOS 
     if config.appState == 'reservar':
         while True:
             try:
