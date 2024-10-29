@@ -1,5 +1,5 @@
 #IMPORTS
-from config import *
+import config
 from funcionesPrincipales import *
 
 #archivos interfazes
@@ -10,24 +10,24 @@ from funcionesPrincipales import *
 """PROGRAMA"""
 
 
-limp()
-while(appState != possibleStatesTupla[-1]):
+config.limp()
+while(config.appState != config.possibleStatesTupla[-1]):
     # Inicializacion 
     while True:
-        if (loggedUserType == '' and appState == 'login'):
-            tipoIngresado =input(ui[0])
+        if (config.loggedUserType == '' and config.appState == 'login'):
+            config.tipoIngresado =input(ui[0])
             #DEBERIAMOS AGREGAR VALIDACION CON E.REGULARES COLO POR SI ESCRIBE CON CARACTERES
-            if tipoIngresado=="1":
-                tipoIngresado="cliente"
-            elif tipoIngresado=="2":
-                tipoIngresado="admin"
-            elif tipoIngresado=="3":
-                tipoIngresado="cocinero"
-            elif tipoIngresado=="4":
-                tipoIngresado="mesero"                
-            limp()
+            if config.tipoIngresado=="1":
+                config.tipoIngresado="cliente"
+            elif config.tipoIngresado=="2":
+                config.tipoIngresado="admin"
+            elif config.tipoIngresado=="3":
+                config.tipoIngresado="cocinero"
+            elif config.tipoIngresado=="4":
+                config.tipoIngresado="mesero"                
+            config.limp()
         try:
-            if verificarTipo(tipoIngresado)==False:
+            if verificarTipo(config.tipoIngresado)==False:
                 raise ValueError
         except ValueError as ms:
             print(f'>> El usuario ingresado no existe, ingrese uno valido: {ms}')
@@ -35,25 +35,25 @@ while(appState != possibleStatesTupla[-1]):
             print(f'Error : {error_mssg}')
         else:
             break
-    loggedUserType = tipoIngresado
-    loggedUserPermissions = getPermisos(loggedUserType)
-    limp()
-    appState=impresionPermisos(tipoIngresado,appState)
+    config.loggedUserType = config.tipoIngresado
+    config.loggedUserPermissions = getPermisos(config.loggedUserType)
+    config.limp()
+    config.appState=impresionPermisos(config.tipoIngresado,config.appState)
     # Verificacion de state
-    while (appState not in possibleStatesTupla) | (verificarPermisos(appState,loggedUserPermissions) == False):
-        limp()
+    while (config.appState not in config.possibleStatesTupla) | (verificarPermisos(config.appState,config.loggedUserPermissions) == False):
+        config.limp()
         print('>>La opcion ingresada no es valido. Ingrese uno de los siguientes posibles')
         input(">>Enter para continuar")
-        limp()
-        appState=impresionPermisos(tipoIngresado,appState)
-    limp()
+        config.limp()
+        config.appState=impresionPermisos(config.tipoIngresado,config.appState)
+    config.limp()
     # Manejo de funcionalidades en base al state
     # ---Funcionalidad verPerfiles
     # ------- Pendiente validacion de inpu
-    if appState == 'verPerfiles':
+    if config.appState == 'verPerfiles':
         
         while True:
-            limp()
+            config.limp()
             idPerfil = input('>> Ingrese all para ver todos los perfiles o el nombre exacto del userType: ')
             try:
                 perfil = getPerfiles(idPerfil)
@@ -72,7 +72,7 @@ while(appState != possibleStatesTupla[-1]):
         mostrarUserTypes(perfil)
     # ---Funcionalidad verMesas
     # ------- Pendiente validacion de input
-    if appState=="recepcion":
+    if config.appState=="recepcion":
         nombre=input(">> ingrese nombre de cliente :")
         while True:
             try:
@@ -85,19 +85,19 @@ while(appState != possibleStatesTupla[-1]):
             else:
                 break
         
-        if verificador_disponibilidad(cantidad_comensales,mesas):
+        if verificador_disponibilidad(cantidad_comensales,config.mesas):
             #entramos al if si solo la funcion verificador_disponibilidad devuelve true
-            print(f"hay disponibilidad de mesas, la mesa es {id_mesa}")
+            print(f"hay disponibilidad de mesas, la mesa es {config.id_mesa}")
             #modificamos el estado de la mesa buscandola por su id
-            for elemento in mesas:
-                if elemento["idMesa"]==id_mesa:
+            for elemento in config.mesas:
+                if elemento["idMesa"]==config.id_mesa:
                     elemento["reserva"]=nombre
                     elemento["estado"]="reservado"
                     elemento["cantPersonas"]=cantidad_comensales
         else:
             print(">> No hay disponibilidad de mesas")       
         input('ENTER para continuar')
-    if appState == 'verMesas':
+    if config.appState == 'verMesas':
         #EXCEPCION        
         while True:
             try:
@@ -132,9 +132,9 @@ while(appState != possibleStatesTupla[-1]):
             
             
         while True:
-            opcion=excepcionNumeroEnteros(ui[7])
+            opcion=excepcionNumeroEnteros(config.ui[7])
             while opcion<1 or opcion>3:
-                opcion=excepcionNumeroEnteros(ui[7])
+                opcion=excepcionNumeroEnteros(config.ui[7])
             if opcion==1:
                 reservar(nombre)
             elif opcion==2:
@@ -142,12 +142,12 @@ while(appState != possibleStatesTupla[-1]):
             elif opcion==3:
                 appState='login'
                 break
-    if appState=="pedidos":
+    if config.appState=="pedidos":
         condicion_general=1
         while condicion_general==1:
             condicion=1
             opcion=menuAdminPedidos()
-            limp()
+            config.limp()
             if opcion==1:
                 while True:
                     try:
@@ -167,46 +167,46 @@ while(appState != possibleStatesTupla[-1]):
                 impresionMesas(mesa)                
             elif opcion==2:#salon
                 contador=0
-                for elemento in pedidos:
+                for elemento in config.pedidos:
                     contador+=1
                     print(f"{">>"}{("Pedido numero → "+str(contador)).center(55)}")
                     impresionPedidosIndividuales(elemento)
-                limp()
+                config.limp()
             elif opcion==3:
                 while condicion==1:
-                    pedidos=administrarPedidos(pedidos)
+                    pedidos=administrarPedidos(config.pedidos)
                     #EXCEPCION
                     condicion=int(input("Seguir modificando pedidos 1/Si 2/No"))
-                    limp()
+                    config.limp()
             elif opcion==4:
-                impresionRecetas(recetas)
+                impresionRecetas(config.recetas)
                 input("Enter para continuar")
-                limp()
+                config.limp()
             elif opcion==5:
-                inventario=solicitarIngredientes(inventario)
+                inventario=solicitarIngredientes(config.inventario)
                 input("Enter para continuar")
-                limp()
+                config.limp()
             elif opcion==6:
-                pedidos=repriorizarPedidos(pedidos)
+                config.pedidos=repriorizarPedidos(config.pedidos)
                 contador=0
-                for elemento in pedidos:
+                for elemento in config.pedidos:
                     contador+=1
                     print(f"{">>"}{("Pedido numero → "+str(contador)).center(55)}")
                     impresionPedidosIndividuales(elemento)  
-                limp()
+                config.limp()
             elif opcion==7:
                 condicion_general=0
-                if (loggedUserType == 'cocinero' and appState == 'pedidos'):#solo para que el cocinero pueda salir al menu de perfiles
-                    appState='login'
-                    loggedUserType=''
-                    loggedUserPermissions=None
-    if (loggedUserType == 'mesero' and appState == 'finalizado'):#solo para que el mesero pueda salir al menu de perfiles
-        appState='login'
-        loggedUserType=''
-        loggedUserPermissions=None
+                if (config.loggedUserType == 'cocinero' and config.appState == 'pedidos'):#solo para que el cocinero pueda salir al menu de perfiles
+                    config.appState='login'
+                    config.loggedUserType=''
+                    config.loggedUserPermissions=None
+    if (config.loggedUserType == 'mesero' and config.appState == 'finalizado'):#solo para que el mesero pueda salir al menu de perfiles
+        config.appState='login'
+        config.loggedUserType=''
+        config.loggedUserPermissions=None
     # Finalizacion
-    if(appState == possibleStatesTupla[-1]):
-        appState='login'
-        loggedUserType=''
-        loggedUserPermissions=None
+    if(config.appState == config.possibleStatesTupla[-1]):
+        config.appState='login'
+        config.loggedUserType=''
+        config.loggedUserPermissions=None
 
