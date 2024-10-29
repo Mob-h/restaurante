@@ -15,19 +15,19 @@ while(config.appState != config.possibleStatesTupla[-1]):
     # Inicializacion 
     while True:
         if (config.loggedUserType == '' and config.appState == 'login'):
-            config.tipoIngresado =input(config.ui[0])
+            tipoIngresado =input(config.ui[0])
             #DEBERIAMOS AGREGAR VALIDACION CON E.REGULARES COLO POR SI ESCRIBE CON CARACTERES
-            if config.tipoIngresado=="1":
-                config.tipoIngresado="cliente"
-            elif config.tipoIngresado=="2":
-                config.tipoIngresado="admin"
-            elif config.tipoIngresado=="3":
-                config.tipoIngresado="cocinero"
-            elif config.tipoIngresado=="4":
-                config.tipoIngresado="mesero"                
+            if tipoIngresado=="1":
+                tipoIngresado="cliente"
+            elif tipoIngresado=="2":
+                tipoIngresado="admin"
+            elif tipoIngresado=="3":
+                tipoIngresado="cocinero"
+            elif tipoIngresado=="4":
+                tipoIngresado="mesero"                
             config.limp()
         try:
-            if verificarTipo(config.tipoIngresado)==False:
+            if verificarTipo(tipoIngresado)==False:
                 raise ValueError
         except ValueError as ms:
             print(f'>> El usuario ingresado no existe, ingrese uno valido: {ms}')
@@ -35,17 +35,17 @@ while(config.appState != config.possibleStatesTupla[-1]):
             print(f'Error : {error_mssg}')
         else:
             break
-    config.loggedUserType = config.tipoIngresado
+    config.loggedUserType = tipoIngresado
     config.loggedUserPermissions = getPermisos(config.loggedUserType)
     config.limp()
-    config.appState=impresionPermisos(config.tipoIngresado,config.appState)
+    config.appState=impresionPermisos(tipoIngresado,config.appState)
     # Verificacion de state
     while (config.appState not in config.possibleStatesTupla) | (verificarPermisos(config.appState,config.loggedUserPermissions) == False):
         config.limp()
         print('>>La opcion ingresada no es valido. Ingrese uno de los siguientes posibles')
         input(">>Enter para continuar")
         config.limp()
-        config.appState=impresionPermisos(config.tipoIngresado,config.appState)
+        config.appState=impresionPermisos(tipoIngresado,config.appState)
     config.limp()
     # Manejo de funcionalidades en base al state
     # ---Funcionalidad verPerfiles
@@ -60,11 +60,9 @@ while(config.appState != config.possibleStatesTupla[-1]):
                 if perfil == None:
                     raise ValueError
             except ValueError as ms:
-                ms=str(ms)
                 print(f'>> El valor ingresado no es correcto, error -> {ms}')
                 input('>>ENTER para continuar')
             except Exception as error_mssg:
-                error_mssg=str(error_mssg)
                 print(f'>> Ha ocurrido un error: {error_mssg}')
                 input('>>ENTER para continuar')
             else:
@@ -109,7 +107,6 @@ while(config.appState != config.possibleStatesTupla[-1]):
                 print('>> Valor ingresado incorrecto')
                 input('>> Enter para continuar')
             except Exception as ms:
-                ms=str(ms)
                 print('>> Ha ocurrido un error -> {ms}')
                 input('>> Enter para continuar')
             else:
@@ -132,23 +129,23 @@ while(config.appState != config.possibleStatesTupla[-1]):
             
             
         while True:
-            opcion=excepcionNumeroEnteros(config.ui[7])
-            while opcion<1 or opcion>3:
-                opcion=excepcionNumeroEnteros(config.ui[7])
-            if opcion==1:
+            config.opcion=excepcionNumeroEnteros(config.ui[7])
+            while config.opcion<1 or config.opcion>3:
+                config.opcion=excepcionNumeroEnteros(config.ui[7])
+            if config.opcion==1:
                 reservar(nombre)
-            elif opcion==2:
+            elif config.opcion==2:
                 verReservas(nombre)
-            elif opcion==3:
+            elif config.opcion==3:
                 appState='login'
                 break
     if config.appState=="pedidos":
-        condicion_general=1
-        while condicion_general==1:
-            condicion=1
-            opcion=menuAdminPedidos()
+        config.condicion_general=1
+        while config.condicion_general==1:
+            config.condicion=1
+            config.opcion=menuAdminPedidos()
             config.limp()
-            if opcion==1:
+            if config.opcion==1:
                 while True:
                     try:
                         idMesa = input('>>Ingrese all para ver todas las mesas o el id de la mesa: ').lower()
@@ -159,34 +156,33 @@ while(config.appState != config.possibleStatesTupla[-1]):
                         print('>> Valor ingresado incorrecto')
                         input('>> Enter para continuar')
                     except Exception as ms:
-                        ms=str(ms)
                         print('>> Ha ocurrido un error -> {ms}')
                         input('>> Enter para continuar')
                     else:
                         break
                 impresionMesas(mesa)                
-            elif opcion==2:#salon
+            elif config.opcion==2:#salon
                 contador=0
                 for elemento in config.pedidos:
                     contador+=1
                     print(f"{">>"}{("Pedido numero → "+str(contador)).center(55)}")
                     impresionPedidosIndividuales(elemento)
                 config.limp()
-            elif opcion==3:
-                while condicion==1:
-                    pedidos=administrarPedidos(config.pedidos)
+            elif config.opcion==3:
+                while config.condicion==1:
+                    config.pedidos=administrarPedidos(config.pedidos)
                     #EXCEPCION
                     condicion=int(input("Seguir modificando pedidos 1/Si 2/No"))
                     config.limp()
-            elif opcion==4:
+            elif config.opcion==4:
                 impresionRecetas(config.recetas)
                 input("Enter para continuar")
                 config.limp()
-            elif opcion==5:
-                inventario=solicitarIngredientes(config.inventario)
+            elif config.opcion==5:
+                config.inventario=solicitarIngredientes(config.inventario)
                 input("Enter para continuar")
                 config.limp()
-            elif opcion==6:
+            elif config.opcion==6:
                 config.pedidos=repriorizarPedidos(config.pedidos)
                 contador=0
                 for elemento in config.pedidos:
@@ -194,8 +190,8 @@ while(config.appState != config.possibleStatesTupla[-1]):
                     print(f"{">>"}{("Pedido numero → "+str(contador)).center(55)}")
                     impresionPedidosIndividuales(elemento)  
                 config.limp()
-            elif opcion==7:
-                condicion_general=0
+            elif config.opcion==7:
+                config.condicion_general=0
                 if (config.loggedUserType == 'cocinero' and config.appState == 'pedidos'):#solo para que el cocinero pueda salir al menu de perfiles
                     config.appState='login'
                     config.loggedUserType=''
