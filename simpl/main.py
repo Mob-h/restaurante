@@ -1,8 +1,6 @@
 #IMPORTS
 import config
-#from funcionesPrincipales import *
 import funciones as fn
-#MAIN
 """PROGRAMA"""
 
 
@@ -91,8 +89,7 @@ while(config.appState != config.possibleStatesTupla[-1]):
         else:
             print(">> No hay disponibilidad de mesas")       
         input('ENTER para continuar')
-    if config.appState == 'verMesas':
-        #EXCEPCION        
+    if config.appState == 'verMesas':       
         while True:
             try:
                 idMesa = input('>>Ingrese all para ver todas las mesas o el id de la mesa: ').lower()
@@ -109,7 +106,7 @@ while(config.appState != config.possibleStatesTupla[-1]):
                 break
         fn.impresionMesas(mesa)
     if config.appState == 'operar':
-        fn.cliente()#HASTA ACA REVISAMOS 
+        fn.cliente() 
     if config.appState == 'reservar':
         while True:
             try:
@@ -157,7 +154,7 @@ while(config.appState != config.possibleStatesTupla[-1]):
                     else:
                         break
                 fn.impresionMesas(mesa)                
-            elif config.opcion==2:#salon
+            elif config.opcion==2:
                 contador=0
                 for elemento in config.pedidos:
                     contador+=1
@@ -166,8 +163,7 @@ while(config.appState != config.possibleStatesTupla[-1]):
                 config.limp()
             elif config.opcion==3:
                 while config.condicion==1:
-                    config.pedidos=fn.administrarPedidos(config.pedidos)
-                    #EXCEPCION
+                    config.pedidos=fn.administrarPedidos(config.pedidos)#PREGUNTAR SI HACE FALTA LA ASIGNACION
                     config.condicion=int(input("Seguir modificando pedidos 1/Si 2/No"))
                     config.limp()
             elif config.opcion==4:

@@ -344,7 +344,7 @@ def cliente():#chk
             "mesa":numeroMesa,
             "platos":[]}
     opcion = client_menu()
-    config.limp()#HASTA ACA REVISAMOS 
+    config.limp()
     while opcion !=4:    
         if opcion == 1:
             mostrar_menu_platos(config.menu)
@@ -396,7 +396,7 @@ def verReservas(nombre):#chk
         print(f"Reservas de {nombre.capitalize()}:")
         impresionMesas(reservasCliente)
         opcion=excepcionNumeroEnteros(">> ¿Desea cancelar alguna reserva?\n>> 1 -> Si\n>> 2 -> No ")
-        while (opcion !=1 and opcion!=2):
+        while (opcion <1 or opcion>2):
             print(">> Opcion invalida")
             opcion=excepcionNumeroEnteros(">> ¿Desea cancelar alguna reserva?\n>> 1 -> Si\n>> 2 -> No ")
         if opcion == 1:
