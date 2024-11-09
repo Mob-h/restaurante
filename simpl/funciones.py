@@ -54,9 +54,6 @@ def impresionPermisos(userType,appState):#CHK
             appState="finalizado" 
     return appState
 
-
-
-
 def getPerfiles (id):#CHK
     if id == 'all':
         return config.userTypes
