@@ -1,11 +1,7 @@
 #IMPORTS
 import config
-from funcionesPrincipales import *
-
-#archivos interfazes
-#FUNCT
-
-
+#from funcionesPrincipales import *
+import funciones as fn
 #MAIN
 """PROGRAMA"""
 
@@ -27,7 +23,7 @@ while(config.appState != config.possibleStatesTupla[-1]):
                 tipoIngresado="mesero"                
             config.limp()
         try:
-            if verificarTipo(tipoIngresado)==False:
+            if fn.verificarTipo(tipoIngresado)==False:
                 raise ValueError
         except ValueError as ms:
             print(f'>> El usuario ingresado no existe, ingrese uno valido: {ms}')
@@ -36,16 +32,16 @@ while(config.appState != config.possibleStatesTupla[-1]):
         else:
             break
     config.loggedUserType = tipoIngresado
-    config.loggedUserPermissions = getPermisos(config.loggedUserType)
+    config.loggedUserPermissions = fn.getPermisos(config.loggedUserType)
     config.limp()
-    config.appState=impresionPermisos(tipoIngresado,config.appState)
+    config.appState=fn.impresionPermisos(tipoIngresado,config.appState)
     # Verificacion de state
-    while (config.appState not in config.possibleStatesTupla) | (verificarPermisos(config.appState,config.loggedUserPermissions) == False):
+    while (config.appState not in config.possibleStatesTupla) | (fn.verificarPermisos(config.appState,config.loggedUserPermissions) == False):
         config.limp()
         print('>>La opcion ingresada no es valido. Ingrese uno de los siguientes posibles')
         input(">>Enter para continuar")
         config.limp()
-        config.appState=impresionPermisos(tipoIngresado,config.appState)
+        config.appState=fn.impresionPermisos(tipoIngresado,config.appState)
     config.limp()
     # Manejo de funcionalidades en base al state
     # ---Funcionalidad verPerfiles
@@ -56,7 +52,7 @@ while(config.appState != config.possibleStatesTupla[-1]):
             config.limp()
             idPerfil = input('>> Ingrese all para ver todos los perfiles o el nombre exacto del userType: ')
             try:
-                perfil = getPerfiles(idPerfil)
+                perfil = fn.getPerfiles(idPerfil)
                 if perfil == None:
                     raise ValueError
             except ValueError as ms:
@@ -67,7 +63,7 @@ while(config.appState != config.possibleStatesTupla[-1]):
                 input('>>ENTER para continuar')
             else:
                 break
-        mostrarUserTypes(perfil)
+        fn.mostrarUserTypes(perfil)
     # ---Funcionalidad verMesas
     # ------- Pendiente validacion de input
     if config.appState=="recepcion":
@@ -83,7 +79,7 @@ while(config.appState != config.possibleStatesTupla[-1]):
             else:
                 break
         
-        if verificador_disponibilidad(cantidad_comensales,config.mesas):
+        if fn.verificador_disponibilidad(cantidad_comensales,config.mesas):
             #entramos al if si solo la funcion verificador_disponibilidad devuelve true
             print(f"hay disponibilidad de mesas, la mesa es {config.id_mesa}")
             #modificamos el estado de la mesa buscandola por su id
@@ -100,7 +96,7 @@ while(config.appState != config.possibleStatesTupla[-1]):
         while True:
             try:
                 idMesa = input('>>Ingrese all para ver todas las mesas o el id de la mesa: ').lower()
-                mesa= getMesas(idMesa)
+                mesa= fn.getMesas(idMesa)
                 if mesa==None:
                     raise ValueError
             except ValueError:
@@ -111,9 +107,9 @@ while(config.appState != config.possibleStatesTupla[-1]):
                 input('>> Enter para continuar')
             else:
                 break
-        impresionMesas(mesa)
+        fn.impresionMesas(mesa)
     if config.appState == 'operar':
-        cliente()#HASTA ACA REVISAMOS 
+        fn.cliente()#HASTA ACA REVISAMOS 
     if config.appState == 'reservar':
         while True:
             try:
@@ -129,13 +125,13 @@ while(config.appState != config.possibleStatesTupla[-1]):
             
             
         while True:
-            config.opcion=excepcionNumeroEnteros(config.ui[7])
+            config.opcion=fn.excepcionNumeroEnteros(config.ui[7])
             while config.opcion<1 or config.opcion>3:
-                config.opcion=excepcionNumeroEnteros(config.ui[7])
+                config.opcion=fn.excepcionNumeroEnteros(config.ui[7])
             if config.opcion==1:
-                reservar(nombre)
+                fn.reservar(nombre)
             elif config.opcion==2:
-                verReservas(nombre)
+                fn.verReservas(nombre)
             elif config.opcion==3:
                 appState='login'
                 break
@@ -143,13 +139,13 @@ while(config.appState != config.possibleStatesTupla[-1]):
         config.condicion_general=1
         while config.condicion_general==1:
             config.condicion=1
-            config.opcion=menuAdminPedidos()
+            config.opcion=fn.menuAdminPedidos()
             config.limp()
             if config.opcion==1:
                 while True:
                     try:
                         idMesa = input('>>Ingrese all para ver todas las mesas o el id de la mesa: ').lower()
-                        mesa= getMesas(idMesa)
+                        mesa= fn.getMesas(idMesa)
                         if mesa==None:
                             raise ValueError
                     except ValueError:
@@ -160,35 +156,35 @@ while(config.appState != config.possibleStatesTupla[-1]):
                         input('>> Enter para continuar')
                     else:
                         break
-                impresionMesas(mesa)                
+                fn.impresionMesas(mesa)                
             elif config.opcion==2:#salon
                 contador=0
                 for elemento in config.pedidos:
                     contador+=1
                     print(f"{">>"}{("Pedido numero → "+str(contador)).center(55)}")
-                    impresionPedidosIndividuales(elemento)
+                    fn.impresionPedidosIndividuales(elemento)
                 config.limp()
             elif config.opcion==3:
                 while config.condicion==1:
-                    config.pedidos=administrarPedidos(config.pedidos)
+                    config.pedidos=fn.administrarPedidos(config.pedidos)
                     #EXCEPCION
                     config.condicion=int(input("Seguir modificando pedidos 1/Si 2/No"))
                     config.limp()
             elif config.opcion==4:
-                impresionRecetas(config.recetas)
+                fn.impresionRecetas(config.recetas)
                 input("Enter para continuar")
                 config.limp()
             elif config.opcion==5:
-                config.inventario=solicitarIngredientes(config.inventario)
+                config.inventario=fn.solicitarIngredientes(config.inventario)
                 input("Enter para continuar")
                 config.limp()
             elif config.opcion==6:
-                config.pedidos=repriorizarPedidos(config.pedidos)
+                config.pedidos=fn.repriorizarPedidos(config.pedidos)
                 contador=0
                 for elemento in config.pedidos:
                     contador+=1
                     print(f"{">>"}{("Pedido numero → "+str(contador)).center(55)}")
-                    impresionPedidosIndividuales(elemento)  
+                    fn.impresionPedidosIndividuales(elemento)  
                 config.limp()
             elif config.opcion==7:
                 config.condicion_general=0
