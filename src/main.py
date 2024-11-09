@@ -2,8 +2,6 @@
 import config
 import funciones as fn
 """PROGRAMA"""
-
-
 config.limp()
 while(config.appState != config.possibleStatesTupla[-1]):
     # Inicializacion 

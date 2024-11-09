@@ -1,7 +1,7 @@
 import copy
 import sys
 import config
-
+import json
 
 #FUNCIONES EN RELACION A INICIO
 def verificarTipo (type):#CHK
@@ -357,7 +357,18 @@ def cliente():#chk
         opcion=client_menu()
     config.limp()
     if len(pedido['platos'])>0:
-        config.pedidos.append(copy.deepcopy(pedido))#UNA VEZ QUE EL CLIENTE CIERRA SESION, EL PEDIDO SE MANDA A LA ESTRUCTURA PRINCIPAL
+        config.pedidos.append(copy.deepcopy(pedido))
+        
+        
+        with open('src/datos/pedidos.json','r+') as archivo:            
+            contenido=archivo.read()
+            if contenido!='':
+                contenido=json.loads(contenido)
+                contenido.append(pedido)
+                archivo.seek(0)
+                archivo.write(json.dumps(contenido))
+                
+
     print("Gracias!")
 def reservar(nombre):#chk    
     impresionMesas(config.mesas)

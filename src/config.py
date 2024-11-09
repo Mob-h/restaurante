@@ -1,21 +1,25 @@
-#VAR'S should change it for json's
-pedidos=[
-    {"nombre":'tomas',
-     "mesa":'1',
-     'platos':[["suprema","1","En preparacion"],
-               ["milanesa de ternera","1","En preparacion"]
-               ]},
-    {"nombre":'juan',
-     "mesa":'2',
-     'platos':[["bife de chorizo","1","En preparacion"],
-               ["asado de tira","1","En preparacion"]
-               ]},
-    {"nombre":'sofia',
-     "mesa":'3',
-     'platos':[["ensalada","1","En preparacion"],
-               ["milanesa de ternera","1","En preparacion"]
-               ]},
-]
+import sys
+import json 
+
+while True:
+    try:
+        with open('src/datos/pedidos.json','r+') as ar:
+            contenido=ar.read()
+        if contenido!="":
+            pedidos=json.loads(contenido)
+        else:
+            pedidos=[]
+            ar.write(json.dumps(pedidos))
+    except FileNotFoundError:
+        print('>>El archvio no existe o la direccion esta mal')
+        input('>>ENTER para continuar')
+        sys.exit(0)
+    except Exception as er:
+        print(f'>>ha ocurrido el siguiente error->{er}')
+        input('>>ENTER para continuar')
+        sys.exit(0)
+    else:
+        break
 
 menu = [
     #Matriz con columnas: Plato, Precio, Categoría, Stock
