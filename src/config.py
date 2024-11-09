@@ -306,7 +306,7 @@ id_mesa={}
 opcion=0
 condicion_general=1
 condicion=1
-direcciones=['simpl/UI/menuPerfiles.txt','simpl/UI/menuCliente.txt','simpl/UI/menuAdministrador.txt','simpl/UI/menuMesero.txt','simpl/UI/menuCocinero.txt','simpl/UI/opcionesCliente.txt','simpl/UI/estadosPedidos.txt','simpl/UI/opcionesReservas.txt']
+direcciones=['src/UI/menuPerfiles.txt','src/UI/menuCliente.txt','src/UI/menuAdministrador.txt','src/UI/menuMesero.txt','src/UI/menuCocinero.txt','src/UI/opcionesCliente.txt','src/UI/estadosPedidos.txt','src/UI/opcionesReservas.txt']
 for dir in direcciones:        
     with open(dir,'r',encoding='utf-8') as archivo:
         auxiliar=archivo.read()
