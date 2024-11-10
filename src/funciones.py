@@ -5,6 +5,7 @@ import json
 
 #FUNCIONES EN RELACION A INICIO
 def guardadoPedidos(pedidos):
+    """recibe una estructura pedidos modificada y la guarda en el archivo json "pedidos" """
     try:
         with open('src/datos/pedidos.json','w') as archivo:
             archivo.write(json.dumps(pedidos))    
