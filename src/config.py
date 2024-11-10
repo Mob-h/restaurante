@@ -260,7 +260,7 @@ mesas = [
         "estado": 'libre',
         "reserva": 'sin reserva',
         "cantPersonas": 0,
-        "maxPersonas" : 4
+        "maxPersonas" : 2
     },
     {
         "idMesa": '2',
@@ -274,28 +274,28 @@ mesas = [
         "estado": 'libre',
         "reserva": 'sin reserva',
         "cantPersonas": 0,
-        "maxPersonas" : 6
+        "maxPersonas" : 4
     },
     {
         "idMesa": '4',
-        "estado": 'comiendo',
+        "estado": 'libre',
         "reserva": 'sin reserva',
         "cantPersonas": 0,
         "maxPersonas" : 4
     },
     {
         "idMesa": '5',
-        "estado": 'abonado',
+        "estado": 'libre',
         "reserva": 'sin reserva',
         "cantPersonas": 0,
-        "maxPersonas" : 8
+        "maxPersonas" : 6
     },
     {
         "idMesa": '6',
-        "estado": 'abonado',
+        "estado": 'libre',
         "reserva": 'sin reserva',
         "cantPersonas": 0,
-        "maxPersonas" : 16
+        "maxPersonas" : 6
     }
 ]
 ui=[]

@@ -93,7 +93,7 @@ def verificador_disponibilidad(cantidad_comensales,mesas):#CHK
             #devuelve true y modifica el id de la mesa
     return False
 def excepcionNumeroEnteros(mensaje):
-    """Esta funcion tiene como fin manejar errores cuando el suusario debe ingresar un dato del tipo entero, retorna un entero"""
+    """Esta funcion tiene como fin manejar errores cuando el usuario debe ingresar un dato del tipo entero, retorna un entero. recibe como parametro un mensaje con el que se pide el dato"""
     variable=0
     while True:
         try:
@@ -120,10 +120,7 @@ def getMesas (id):#CHK
                 return contenedorMesa
     return None
 def impresionMesas(mesas):#chk
-    """
-    Esta funcion recibe la estructutura de datos mesa y realiza una impresion
-    la estructura debe contener una cantidad de mesas PAR
-    """
+
     if len(mesas)%2==0:#CHK
         print(f"""
 ╔═════════════════════════════════════════════╗
@@ -314,7 +311,10 @@ def hacerPedido(pedido):#chk
             except ValueError:
                 print(' >>Opcion ingresada no valida\n>> Ingrese una opcion valida')
             else:
-                break            
+                break   
+    
+    
+             
     print("Gracias por su pedido!")
     input("\nEnter para continuar")
 def cliente():#chk
@@ -348,6 +348,11 @@ def cliente():#chk
             input('ENTER para continuar')
         else:
             break 
+    cantPersonas=excepcionNumeroEnteros('>>Ingrese la cantidad de comensales en la mesa\n>>')
+    while config.mesas[int(numeroMesa)-1]['maxPersonas']<cantPersonas:
+        print(f">>La mesa tiene capacidad para {config.mesas[int(numeroMesa)-1]['maxPersonas']} personas.\n>>Ingrese una cantidad valida")
+        input('>>ENTER para continuar')
+        cantPersonas=excepcionNumeroEnteros('>>Ingrese la cantidad de comensales en la mesa\n>>')
     pedido={"nombre":nombre,
             "mesa":numeroMesa,
             "platos":[]}
@@ -367,6 +372,9 @@ def cliente():#chk
     if len(pedido['platos'])>0:
         config.pedidos.append(copy.deepcopy(pedido))
         guardadoPedidos(config.pedidos)
+        config.mesas[int(numeroMesa)-1]['estado']='ocupado'
+        config.mesas[int(numeroMesa)-1]['reserva']=nombre
+        config.mesas[int(numeroMesa)-1]['cantPersonas']=cantPersonas
     print("Gracias!")
 def reservar(nombre):#chk    
     impresionMesas(config.mesas)
