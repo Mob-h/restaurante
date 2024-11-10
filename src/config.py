@@ -5,17 +5,17 @@ while True:
     try:
         with open('src/datos/pedidos.json','r+') as ar:
             contenido=ar.read()
-        if contenido!="":
-            pedidos=json.loads(contenido)
-        else:
-            pedidos=[]
-            ar.write(json.dumps(pedidos))
+            if contenido!="":
+                pedidos=json.loads(contenido)
+            else:
+                pedidos=[]
+                ar.write(json.dumps(pedidos))
     except FileNotFoundError:
         print('>>El archvio no existe o la direccion esta mal')
         input('>>ENTER para continuar')
         sys.exit(0)
     except Exception as er:
-        print(f'>>ha ocurrido el siguiente error->{er}')
+        print(f'>>Error->{er}')
         input('>>ENTER para continuar')
         sys.exit(0)
     else:

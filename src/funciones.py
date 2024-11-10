@@ -4,6 +4,13 @@ import config
 import json
 
 #FUNCIONES EN RELACION A INICIO
+def guardadoPedidos(pedidos):
+    try:
+        with open('src/datos/pedidos.json','w') as archivo:
+            archivo.write(json.dumps(pedidos))    
+    except Exception as er:
+        print(f'>>ERROR con escritura de datos {er}')
+    
 def verificarTipo (type):#CHK
     tipoValido = False
     for userType in config.userTypes:
@@ -358,17 +365,7 @@ def cliente():#chk
     config.limp()
     if len(pedido['platos'])>0:
         config.pedidos.append(copy.deepcopy(pedido))
-        
-        
-        with open('src/datos/pedidos.json','r+') as archivo:            
-            contenido=archivo.read()
-            if contenido!='':
-                contenido=json.loads(contenido)
-                contenido.append(pedido)
-                archivo.seek(0)
-                archivo.write(json.dumps(contenido))
-                
-
+        guardadoPedidos(config.pedidos)
     print("Gracias!")
 def reservar(nombre):#chk    
     impresionMesas(config.mesas)
@@ -502,7 +499,13 @@ def administrarPedidos(pedidos):#chk
         pedidos[numPedido-1]["platos"][plato-1][2]="Entregado"
     elif opcion==5:
         pedidos[numPedido-1]["platos"][plato-1][2]="Rechazado"
-    return pedidos    
+    guardadoPedidos(pedidos)
+    return pedidos
+
+    
+
+
+    
 def solicitarIngredientes(inventario):#chk
     impresionInventario(inventario)
     nombre=input("ingrese nombre del producto a agregar").capitalize()
@@ -536,4 +539,13 @@ def repriorizarPedidos(pedidos):#chk
         # Inserto el pedido en la nueva posicion usando rebanado
         pedidos = pedidos[:nuevaPos] + [pedidoMovido] + pedidos[nuevaPos:]
     print("Repriorización hecha.")  
+    try:
+        with open('src/datos/pedidos.json','r+') as archivo:
+            contenido=json.load(archivo)
+            contenido=copy.deepcopy(pedidos)
+            archivo.seek(0)
+            archivo.write(json.dumps(contenido))
+    except:
+        print('>>ERROR con escritura de datos')  
+    guardadoPedidos(pedidos) 
     return pedidos
